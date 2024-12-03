@@ -1,0 +1,37 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}
+    {% if task %}Edit Task{% else %}Create Task{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="vh-100 d-flex align-items-center justify-content-center" style="background: url('/static/images/task.webp') no-repeat center center/cover;">
+    <div class="card p-5 shadow" style="width: 100%; max-width: 500px; border-radius: 15px; background: rgba(255, 255, 255, 0.9);">
+        <h2 class="text-center mb-4" style="font-family: 'Arial', sans-serif; font-weight: bold; color: #333;">
+            {% if task %}Edit Task{% else %}Create Task{% endif %}
+        </h2>
+        <form method="post" style="font-family: 'Arial', sans-serif;">
+            {% csrf_token %}
+            <div class="form-group mb-4">
+                <label for="id_title" class="form-label" style="font-weight: bold; font-size: 1rem; color: #555;">Title:</label>
+                <input type="text" name="title" id="id_title" class="form-control rounded-pill px-4 py-3 shadow-sm" placeholder="Enter task title" value="{{ form.title.value|default_if_none:'' }}" style="border: 1px solid #ccc; transition: border-color 0.3s, box-shadow 0.3s;">
+            </div>
+            <div class="form-group mb-4">
+                <label for="id_description" class="form-label" style="font-weight: bold; font-size: 1rem; color: #555;">Description:</label>
+                <textarea name="description" id="id_description" rows="4" class="form-control rounded px-4 py-3 shadow-sm" placeholder="Enter task description" style="border: 1px solid #ccc; transition: border-color 0.3s, box-shadow 0.3s;">{{ form.description.value|default_if_none:'' }}</textarea>
+            </div>
+            <div class="form-group mb-4">
+                <label for="id_status" class="form-label" style="font-weight: bold; font-size: 1rem; color: #555;">Status:</label>
+                <select name="status" id="id_status" class="form-select rounded-pill px-4 py-3 shadow-sm" style="border: 1px solid #ccc; transition: border-color 0.3s, box-shadow 0.3s;">
+                    {% for key, value in form.fields.status.choices %}
+                        <option value="{{ key }}" {% if key == form.status.value %}selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 rounded-pill" style="font-weight: bold; font-size: 1rem; padding: 10px 20px; background-color: #2575fc; border: none;">
+                {% if task %}Save Changes{% else %}Save Task{% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

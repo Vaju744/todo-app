@@ -1,0 +1,31 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<div class="vh-100" style="background-image: url('https://images.ctfassets.net/lzny33ho1g45/O6Ns6DttUzJym7rhGiD36/b1cc4e063288e5161b14edad3569c5cb/best-to-do-list-apps.jpg?w=1520&fm=avif&q=30&fit=thumb&h=760'); background-size: cover; background-position: center;">
+    <div class="container h-100 d-flex justify-content-center align-items-center">
+        <div class="card p-4" style="width: 100%; max-width: 400px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);">
+            <div class="text-center mb-4">
+                <img src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png" alt="User Icon" style="width: 80px; margin-bottom: 10px;">
+                <h2 style="font-family: 'Arial', sans-serif; color: #333; font-size: 1.8rem; font-weight: bold;">Create an Account</h2>
+            </div>
+            <form method="post" style="font-family: 'Arial', sans-serif;">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="username" class="form-label" style="font-weight: bold;">Username:</label>
+                    <input type="text" name="username" id="username" class="form-control rounded-pill px-3 py-2" placeholder="Enter your username" style="border: 2px solid #ccc; transition: border-color 0.3s;">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password1" class="form-label" style="font-weight: bold;">Password:</label>
+                    <input type="password" name="password1" id="password1" class="form-control rounded-pill px-3 py-2" placeholder="Enter your password" style="border: 2px solid #ccc; transition: border-color 0.3s;">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password2" class="form-label" style="font-weight: bold;">Password confirmation:</label>
+                    <input type="password" name="password2" id="password2" class="form-control rounded-pill px-3 py-2" placeholder="Confirm your password" style="border: 2px solid #ccc; transition: border-color 0.3s;">
+                </div>
+                <button type="submit" class="btn btn-primary w-100 rounded-pill" style="background-color: #2575fc; border: none; font-weight: bold; padding: 10px 20px;">Sign Up</button>
+            </form>
+            <p class="text-center mt-3" style="font-size: 0.9rem;">Already have an account? <a href="{% url 'login' %}" style="color: #2575fc; text-decoration: underline;">Log In</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
