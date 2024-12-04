@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to To-Do App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Full viewport height */
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            background-color: #fff;
+            color: #6a11cb;
+        }
+        .navbar a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            display: flex;
+            flex: 1; /* Fill remaining space */
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .welcome-section {
+            flex: 1;
+            padding: 20px;
+            text-align: left;
+        }
+        .welcome-section h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .welcome-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .buttons a {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            background-color: #2575fc;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        .buttons a:hover {
+            background-color: #6a11cb;
+        }
+        .welcome-image {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+        }
+        .welcome-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>To-Do App</h1>
+        <div>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Signup</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Welcome to To-Do App</h1>
+            <p>Organize your tasks efficiently and achieve more every day.</p>
+        </div>
+        <div class="welcome-image">
+            <img src="https://www.amitree.com/wp-content/uploads/2021/08/the-pros-and-cons-of-paper-to-do-lists.jpeg" alt="To-Do App Image">
+        </div>
+    </div>
+</body>
+</html>

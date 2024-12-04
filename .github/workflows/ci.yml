@@ -1,0 +1,60 @@
+name: Django CI
+
+on:
+  push:
+    branches:
+      - main  # Run CI on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Run CI on pull requests to the main branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: mysql:8.0  # Use MySQL version matching your project
+        env:
+          MYSQL_DATABASE: todo_db
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: Bharadwaj123
+          MYSQL_ROOT_PASSWORD: Bharadwaj123
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'  # Update to match your project's Python version
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Configure database settings
+      run: |
+        sed -i "s/'HOST': .*/'HOST': 'localhost',/g" todo_project/settings.py
+        sed -i "s/'PORT': .*/'PORT': '3306',/g" todo_project/settings.py
+
+    - name: Run migrations
+      env:
+        DATABASE_URL: mysql://admin:Bharadwaj123@localhost:3306/todo_db
+      run: |
+        python manage.py makemigrations
+        python manage.py migrate
+
+    - name: Run tests
+      env:
+        DATABASE_URL: mysql://admin:Bharadwaj123@localhost:3306/todo_db
+      run: python manage.py test

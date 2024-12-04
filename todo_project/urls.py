@@ -17,8 +17,29 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from tasks import views
+from django.contrib.auth import views as auth_views
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('', views.welcome, name='welcome'),
+#     path('', include('tasks.urls')), 
+#     path('tasks/', include('tasks.urls')),
+# ]
+
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),  # Admin URL
+#     path('', views.welcome, name='welcome'),  # Root URL for welcome page
+#     path('login/', auth_views.LoginView.as_view(template_name='tasks/login.html'), name='login'),  # Login URL
+#     path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # Logout URL
+#     path('tasks/', include('tasks.urls')),  # Include all task-related URLs
+# ]
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('tasks.urls')),
+    path('admin/', admin.site.urls),  # Admin URL
+    path('', views.welcome, name='welcome'),  # Welcome page
+    path('login/', auth_views.LoginView.as_view(template_name='tasks/login.html'), name='login'),  # Login URL
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # Logout URL
+    path('tasks/', include('tasks.urls')),  # Include task-related URLs
 ]

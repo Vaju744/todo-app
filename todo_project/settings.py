@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import pymysql
+pymysql.install_as_MySQLdb()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +28,7 @@ SECRET_KEY = 'django-insecure-+9-54h1%84pa#^5a*vp2zv2!u!u_3%u^@tz-rgi%rf$(y+f_qy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,12 +78,19 @@ WSGI_APPLICATION = 'todo_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'todo_db',  # Replace with your RDS database name
+        'USER': 'admin',  # Replace with your RDS username
+        'PASSWORD': 'Bharadwaj123',  # Replace with your RDS password
+        'HOST': 'database-3.chwlezgyi7rm.eu-west-1.rds.amazonaws.com',  # Replace with your RDS endpoint
+        'PORT': '3306',  # Default MySQL port
     }
 }
+
 
 
 # Password validation
@@ -111,8 +121,9 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/tasks/'
+LOGOUT_REDIRECT_URL = '/'  # Redirect to the welcome page after logout
+LOGIN_URL = '/login/'  # Login page URL
 
 
 USE_TZ = True
@@ -121,10 +132,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+#STATIC_URL = '/static/'
+#STATICFILES_DIRS = [
+#    BASE_DIR / 'static',
+#]
+
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 
 # Default primary key field type
