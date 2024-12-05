@@ -1,0 +1,14 @@
+[33mc131d78[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Your commit message
+[33mfb064ad[m[33m ([m[1;31mcodecommit-origin/main[m[33m)[m commit message
+[33me6531ba[m Added changes for ci file
+[33m574db5b[m Added changes for ci file
+[33m528e354[m fixed ci issues
+[33mad59706[m Added changes for ci
+[33m9ad302c[m Update venv setup to bypass yum install
+[33m33c07c2[m Add python-venv.config for python3-venv installation
+[33mb538512[m Clean up .ebextensions and ensure proper hook script
+[33m50c5e00[m Add virtual environment setup script
+[33m5ec1c48[m Update requirements.txt with cleaned dependencies and pymysql
+[33mddadf10[m Add platform and EB configuration for deployment
+[33m0b68a7b[m Add Elastic Beanstalk configuration for Python WSGI
+[33m68e6ed9[m Initial commit of Django project

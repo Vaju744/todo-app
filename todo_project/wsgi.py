@@ -8,9 +8,14 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/wsgi/
 """
 
 import os
-
+import django
 from django.core.wsgi import get_wsgi_application
 
+print("Initializing WSGI application...")  # Debug statement
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'todo_project.settings')
 
+django.setup()
+print("Django setup complete...")  # Debug statement
+
 application = get_wsgi_application()
+print("WSGI application initialized...")  # Debug statement
