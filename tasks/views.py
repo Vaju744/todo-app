@@ -1,47 +1,47 @@
+"""
+Views for the tasks app.
+
+This module contains views for managing tasks, user authentication, and task
+operations like creating, editing, deleting, and listing tasks.
+"""
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import logout
+#from django.http import HttpResponseForbidden
 from .models import Task
 from .forms import TaskForm
-from django.contrib.auth import logout
-
-# def signup(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('login')
-#     else:
-#         form = UserCreationForm()
-#     return render(request, 'tasks/signup.html', {'form': form})
-from django import forms
-
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponseForbidden
 
 
 def welcome(request):
+    """
+    View for the welcome page.
+    """
     return render(request, 'tasks/welcome.html')
 
+
 def signup(request):
+    """
+    View for user signup.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Redirects to the login page after successful signup or
+        renders the signup template with form errors.
+    """
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # Redirect to the login page after successful signup
+            return redirect('login')
     else:
         form = UserCreationForm()
-    
+
     # Add CSS classes to form fields
-    for field_name, field in form.fields.items():
-        field.widget.attrs['class'] = 'form-control rounded-pill'
-
-    return render(request, 'tasks/signup.html', {'form': form})
-
-    
-    # Add classes to form fields
-    for field_name, field in form.fields.items():
+    for field_name, field in form.fields.items():  # pylint: disable=unused-variable
         field.widget.attrs['class'] = 'form-control rounded-pill'
 
     return render(request, 'tasks/signup.html', {'form': form})
@@ -49,45 +49,36 @@ def signup(request):
 
 @login_required
 def task_list(request):
-    if not request.user.is_authenticated:
-        return HttpResponseForbidden("You must be logged in to view this page.")
-    tasks = Task.objects.filter(user=request.user)
+    """
+    View for listing tasks for the current user.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Renders the task list template.
+    """
+    tasks = Task.objects.filter(user=request.user)  # pylint: disable=no-member
     return render(request, 'tasks/task_list.html', {'tasks': tasks})
 
 
-# @login_required
-# def create_task(request):
-#     if request.method == 'POST':
-#         form = TaskForm(request.POST)
-#         if form.is_valid():
-#             task = form.save(commit=False)
-#             task.user = request.user
-#             task.save()
-#             return redirect('task_list')
-#     else:
-#         form = TaskForm()
-#     return render(request, 'tasks/task_form.html', {'form': form})
-
-# @login_required
-# def create_task(request):
-#     if request.method == "POST":
-#         form = TaskForm(request.POST)
-#         if form.is_valid():
-#             task = form.save(commit=False)  # Do not save yet
-#             task.user = request.user       # Associate the task with the logged-in user
-#             task.save()
-#             return redirect('task_list')
-#     else:
-#         form = TaskForm()
-#     return render(request, 'tasks/task_form.html', {'form': form})
-
 @login_required
 def create_task(request):
+    """
+    View for creating a new task.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Redirects to the task list on success or renders the
+        task form template with form errors.
+    """
     if request.method == "POST":
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
-            task.user = request.user  # Associate task with logged-in user
+            task.user = request.user
             task.save()
             return redirect('task_list')
     else:
@@ -95,10 +86,20 @@ def create_task(request):
     return render(request, 'tasks/task_form.html', {'form': form})
 
 
-
 @login_required
-def update_task(request, id):
-    task = get_object_or_404(Task, id=id, user=request.user)
+def update_task(request, task_id):
+    """
+    View for updating an existing task.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        task_id (int): The ID of the task to update.
+
+    Returns:
+        HttpResponse: Redirects to the task list on success or renders the
+        task form template with form errors.
+    """
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
@@ -108,43 +109,41 @@ def update_task(request, id):
         form = TaskForm(instance=task)
     return render(request, 'tasks/task_form.html', {'form': form})
 
+
 @login_required
-def delete_task(request, id):
-    task = get_object_or_404(Task, id=id, user=request.user)
-    if request.method == 'POST':
+def delete_task(request, task_id):
+    """
+    View for deleting an existing task.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        task_id (int): The ID of the task to delete.
+
+    Returns:
+        HttpResponse: Redirects to the task list after successful deletion or
+        renders the task confirm delete template.
+    """
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == "POST":
         task.delete()
         return redirect('task_list')
     return render(request, 'tasks/task_confirm_delete.html', {'task': task})
 
-def custom_logout(request):
-    logout(request)
-    return redirect('login')
-
-def task_list(request):
-    tasks = Task.objects.filter(user=request.user)
-    return render(request, 'tasks/task_list.html', {'tasks': tasks})
-
-# @login_required
-# def edit_task(request, pk):
-#     # Fetch the specific task that belongs to the logged-in user
-#     task = get_object_or_404(Task, pk=pk, user=request.user)
-
-#     if request.method == "POST":
-#         # Populate the form with POST data and bind it to the existing task
-#         form = TaskForm(request.POST, instance=task)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('task_list')  # Redirect back to the task list
-#     else:
-#         # Initialize the form with the existing task data
-#         form = TaskForm(instance=task)
-
-#     return render(request, 'tasks/task_form.html', {'form': form, 'task': task})
 
 @login_required
-def edit_task(request, id):  # Use 'id' instead of 'pk'
-    task = get_object_or_404(Task, pk=id, user=request.user)
+def edit_task(request, task_id):
+    """
+    View for editing an existing task.
 
+    Args:
+        request (HttpRequest): The HTTP request object.
+        task_id (int): The ID of the task to edit.
+
+    Returns:
+        HttpResponse: Redirects to the task list on success or renders the
+        task form template with form errors.
+    """
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == "POST":
         form = TaskForm(request.POST, instance=task)
         if form.is_valid():
@@ -152,16 +151,18 @@ def edit_task(request, id):  # Use 'id' instead of 'pk'
             return redirect('task_list')
     else:
         form = TaskForm(instance=task)
-
-    return render(request, 'tasks/task_form.html', {'form': form, 'task': task})
-
+    return render(request, 'tasks/task_form.html', {'form': form})
 
 
-@login_required
-def delete_task(request, id):  # Use 'id' instead of 'pk'
-    task = get_object_or_404(Task, pk=id, user=request.user)
-    if request.method == "POST":
-        task.delete()
-        return redirect('task_list')
-    return render(request, 'tasks/task_confirm_delete.html', {'task': task})
+def custom_logout(request):
+    """
+    View for logging out the current user.
 
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Redirects to the login page.
+    """
+    logout(request)
+    return redirect('login')

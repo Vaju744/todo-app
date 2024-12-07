@@ -23,7 +23,7 @@ from django.contrib.auth import views as auth_views
 # urlpatterns = [
 #     path('admin/', admin.site.urls),
 #     path('', views.welcome, name='welcome'),
-#     path('', include('tasks.urls')), 
+#     path('', include('tasks.urls')),
 #     path('tasks/', include('tasks.urls')),
 # ]
 
@@ -39,7 +39,11 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin URL
     path('', views.welcome, name='welcome'),  # Welcome page
-    path('login/', auth_views.LoginView.as_view(template_name='tasks/login.html'), name='login'),  # Login URL
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # Logout URL
+    path('login/',
+    auth_views.LoginView.as_view(template_name='tasks/login.html'),
+    name='login'),  # Login URL
+    path('logout/',
+    auth_views.LogoutView.as_view(),
+    name='logout'),  # Logout URL
     path('tasks/', include('tasks.urls')),  # Include task-related URLs
 ]

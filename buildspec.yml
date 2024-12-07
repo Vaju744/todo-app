@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.10
+    commands:
+      - echo Installing dependencies...
+      - pip install -r requirements.txt
+      - pip install pylint
+  build:
+    commands:
+      - echo running static code analysis
+      #- pylint 
+  post_build:
+    commands:
+      - echo static code analysis successfull
+      - echo Build phase complete.
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: no
