@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      python: 3.10
+      python: 3.10 #Specified the python version
       java: corretto17 #Use Java 17 (Corretto)
     commands:
       - echo Installing dependencies...
@@ -19,7 +19,7 @@ phases:
   build:
     commands:
       - echo running static code analysis
-      #- pylint 
+      - pylint todo-app tasks
       #for sonar analysis
       - java -version
       - sonar-scanner -Dsonar.projectKey=Vaju744_todo-app -Dsonar.organization=vaju744 -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=dd84e7ac7b01444324701fd7f484e986601a892f -Dsonar.exclusions=**/env/**,**/__pycache__/** || true

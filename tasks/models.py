@@ -6,7 +6,7 @@ the Task model, which represents tasks assigned to users.
 """
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model  # Correctly fetch the User model
 
 
 class Task(models.Model):
@@ -28,8 +28,8 @@ class Task(models.Model):
     ]
 
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='tasks'
-    )  # Link task to user
+        get_user_model(), on_delete=models.CASCADE, related_name='tasks'
+    )  # Use get_user_model() for compatibility
     title = models.CharField(max_length=200)
     description = models.TextField()
     status = models.CharField(

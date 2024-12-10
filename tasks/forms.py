@@ -9,6 +9,8 @@ from django import forms
 from .models import Task
 
 
+# Pylint warning disabled because this class is a minimal Django ModelForm.
+# pylint: disable=too-few-public-methods
 class TaskForm(forms.ModelForm):
     """
     A form for creating and updating Task instances.
@@ -16,14 +18,11 @@ class TaskForm(forms.ModelForm):
     This form provides fields for the title, description, and status.
     The status field uses a dropdown widget with predefined choices.
     """
+
     class Meta:
-        """ Class for title, description, status"""
+        """Meta class defining model and fields."""
         model = Task
         fields = ['title', 'description', 'status']
         widgets = {
             'status': forms.Select(choices=Task.STATUS_CHOICES),
         }
-
-    # Pylint warning disabled because this class is a Django ModelForm.
-    # Suppress Pylint warning for minimal model form
-    # pylint: disable=too-few-public-methods

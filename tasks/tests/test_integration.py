@@ -7,7 +7,7 @@ for creating tasks in the tasks app.
 
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from tasks.models import Task
 
 
@@ -20,18 +20,23 @@ class TaskIntegrationTest(TestCase):
         """
         Set up a test user for authentication.
         """
-        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user = get_user_model().objects.create_user(
+            username='testuser', password='testpass'
+        )
 
     def test_create_task_view(self):
         """
         Test the create_task view for authenticated users.
         """
         self.client.login(username='testuser', password='testpass')
-        response = self.client.post(reverse('create_task'), {
-            'title': 'Integration Test Task',
-            'description': 'Integration Test Description',
-            'status': 'not_started',  # Corrected field name
-        })
+        response = self.client.post(
+            reverse('create_task'),
+            {
+                'title': 'Integration Test Task',
+                'description': 'Integration Test Description',
+                'status': 'not_started',  # Corrected field name
+            },
+        )
         self.assertEqual(response.status_code, 302)  # Expect redirect after successful creation
 
         # Verify that the task was created

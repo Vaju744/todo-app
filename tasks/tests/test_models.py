@@ -6,7 +6,7 @@ including creation, field values, and string representation.
 """
 
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from tasks.models import Task
 
 
@@ -19,8 +19,10 @@ class TaskModelTest(TestCase):
         """
         Set up a test user and a test task for use in the tests.
         """
-        self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.task = Task.objects.create(  # pylint: disable=no-member
+        self.user = get_user_model().objects.create_user(
+            username='testuser', password='testpass'
+        )
+        self.task = Task.objects.create(
             title='Test Task',
             description='Test Description',
             status='not_started',
