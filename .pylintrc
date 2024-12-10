@@ -83,7 +83,10 @@ limit-inference-results=100
 
 # List of plugins (as comma separated values of python module names) to load,
 # usually to register additional checkers.
-load-plugins=
+load-plugins=pylint_django
+
+[DJANGO]
+django-settings-module=todo_project.settings
 
 # Pickle collected data for later comparisons.
 persistent=yes
@@ -309,7 +312,7 @@ max-locals=15
 max-parents=7
 
 # Maximum number of positional arguments for function / method.
-
+max-positional-arguments=5
 
 # Maximum number of public methods for a class (see R0904).
 max-public-methods=20
@@ -440,7 +443,8 @@ disable=C0103,
         deprecated-pragma,
         use-symbolic-message-instead,
         use-implicit-booleaness-not-comparison-to-string,
-        use-implicit-booleaness-not-comparison-to-zero
+        use-implicit-booleaness-not-comparison-to-zero,
+        too-few-public-methods
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
