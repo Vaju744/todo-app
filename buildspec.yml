@@ -4,14 +4,27 @@ phases:
   install:
     runtime-versions:
       python: 3.10
+      java: corretto17 #Use Java 17 (Corretto)
     commands:
       - echo Installing dependencies...
       - pip install -r requirements.txt
       - pip install pylint
+      #Install for sonar-scanner
+      - echo "Downloading SonarScanner..."
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+      - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+      - export PATH=$PATH:$(pwd)/sonar-scanner-5.0.1.3006-linux/bin
+      - export JAVA_HOME=/usr/lib/jvm/java-17
+      - export PATH=$JAVA_HOME/bin:$PATH
   build:
     commands:
       - echo running static code analysis
       #- pylint 
+      #for sonar analysis
+      - java -version
+      - sonar-scanner -Dsonar.projectKey=Vaju744_todo-app -Dsonar.organization=vaju744 -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=dd84e7ac7b01444324701fd7f484e986601a892f -Dsonar.exclusions=**/env/**,**/__pycache__/** || true
+
+
   post_build:
     commands:
       - echo static code analysis successfull
