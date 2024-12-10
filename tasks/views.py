@@ -24,7 +24,6 @@ def welcome(request):
 def signup(request):
     """
     View for user signup.
-
     Args:
         request (HttpRequest): The HTTP request object.
 
