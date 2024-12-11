@@ -4,10 +4,10 @@ phases:
   install:
     runtime-versions:
       python: 3.10 #Specified the python version
-      java: corretto17 #Use Java 17 (Corretto)
+      java: corretto17 #Used Java 17 (Corretto)
     commands:
       - echo Installing dependencies...
-      - pip install -r requirements.txt
+      - pip install -r requirements.txt #Install Dependencies
       - pip install pylint
       - pip install pylint-django
       #Install for sonar-scanner
@@ -20,7 +20,7 @@ phases:
   build:
     commands:
       - echo running static code analysis
-      - pylint tasks
+      - pylint tasks todo_project manage.py
       #for sonar analysis
       - java -version
       - sonar-scanner -Dsonar.projectKey=Vaju744_todo-app -Dsonar.organization=vaju744 -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=dd84e7ac7b01444324701fd7f484e986601a892f -Dsonar.exclusions=**/env/**,**/__pycache__/** || true
