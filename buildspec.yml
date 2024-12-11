@@ -9,6 +9,7 @@ phases:
       - echo Installing dependencies...
       - pip install -r requirements.txt
       - pip install pylint
+      - pip install pylint-django
       #Install for sonar-scanner
       - echo "Downloading SonarScanner..."
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
