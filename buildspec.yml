@@ -9,16 +9,16 @@ phases:
       - echo "Cleaning up old files..."
       - rm -rf sonar-scanner-5.0.1.3006-linux || true
       - echo "Installing dependencies..."
-      - pip install -r requirements.txt
-      - pip install pylint pylint-django
+      - sudo pip install -r requirements.txt
+      - sudo pip install pylint pylint-django
       - echo "Downloading and Installing SonarScanner..."
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
       - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+      - sudo mkdir -p /opt/sonar-scanner
       - sudo mv sonar-scanner-5.0.1.3006-linux /opt/sonar-scanner
       - export PATH=$PATH:/opt/sonar-scanner/bin
       - export JAVA_HOME=/usr/lib/jvm/java-17
       - export PATH=$JAVA_HOME/bin:$PATH
-      - source ~/.bash_profile
 
   build:
     commands:
