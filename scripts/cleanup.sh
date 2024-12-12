@@ -1,6 +1,5 @@
 #!/bin/bash
-
-echo "Cleaning up old files..."
+echo "Running cleanup..."
 sudo rm -rf /home/ec2-user/todo/*
-sudo rm -rf /home/ec2-user/todo/sonar-scanner-5.0.1.3006-linux || true
-echo "Cleanup completed successfully."
+sudo rm -rf /opt/codedeploy-agent/deployment-root/*
+echo "Cleanup completed."
