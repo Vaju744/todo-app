@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from django.core.management import execute_from_command_line  # Moved to the top level
+from django.core.management import execute_from_command_line #moved
 
 def main():
     """Run administrative tasks."""
