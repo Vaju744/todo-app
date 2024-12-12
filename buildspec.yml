@@ -9,8 +9,9 @@ phases:
       - echo "Cleaning up old files..."
       - rm -rf sonar-scanner-5.0.1.3006-linux || true
       - echo "Installing dependencies..."
-      - sudo pip install -r requirements.txt
-      - sudo pip install pylint pylint-django
+      - sudo python3 -m pip install --upgrade pip
+      - sudo python3 -m pip install -r requirements.txt
+      - sudo python3 -m pip install pylint pylint-django
       - echo "Downloading and Installing SonarScanner..."
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
       - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
