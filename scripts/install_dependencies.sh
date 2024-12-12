@@ -14,8 +14,8 @@ if [ ! -d "$DEPLOYMENT_DIR" ]; then
 fi
 
 # Clean up old files while preserving the scripts directory
-echo "Cleaning up old files in /home/ec2-user/todo but preserving scripts directory..."
-sudo find /home/ec2-user/todo -mindepth 1 ! -name "scripts" -exec rm -rf {} +
+#echo "Cleaning up old files in /home/ec2-user/todo but preserving scripts directory..."
+#sudo find /home/ec2-user/todo -mindepth 1 ! -name "scripts" -exec rm -rf {} +
 
 # Copy new files from the deployment directory
 echo "Copying new files from $DEPLOYMENT_DIR to /home/ec2-user/todo..."
