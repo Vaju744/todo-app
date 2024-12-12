@@ -29,7 +29,7 @@ phases:
   post_build:
     commands:
       - echo static code analysis successfull
-      - echo Build phase complete.
+      - echo Build phase complete..
 
 artifacts:
   files:
