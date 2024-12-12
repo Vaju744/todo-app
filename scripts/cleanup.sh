@@ -1,8 +1,6 @@
 #!/bin/bash
 
-echo "Cleaning up old project files..."
-
-# Delete old files to avoid file conflict errors
-sudo rm -rf /home/ec2-user/todo/*
-
-echo "Cleanup completed successfully."
+echo "Running cleanup before deployment..."
+sudo rm -rf /home/ec2-user/todo/sonar-scanner-5.0.1.3006-linux || true
+sudo rm -rf /home/ec2-user/todo/* || true
+echo "Cleanup completed."
